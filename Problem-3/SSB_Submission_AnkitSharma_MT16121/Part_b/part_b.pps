@@ -1,0 +1,12 @@
+%% PPLANE file %%
+
+H.name = 'part_b.pps';
+H.xvar = 'x';
+H.yvar = 'yp';
+H.xder = 'k_not + k1*S + k3*yp - k2*x';
+H.yder = 'k4*x*(1 - yp) - 1*1*yp';
+H.pname = {'S','k_not','k1','k2','k3','k4'};
+H.pval = {'1','0.5','0.5','0.5','0.5','0.5'};
+H.fieldtype = 'arrows';
+H.npts = 20;
+H.wind = [-2  4 -4  2];

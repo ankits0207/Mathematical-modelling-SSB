@@ -1,0 +1,50 @@
+#Equations for the network in Fig. 1B, Table 2 (tqssa with Pade approximant).
+#File used for Fig. 1C. 
+
+#K is the parameter used in Fig. 1D.
+Et=Dt*K
+
+#MM constants
+Kme=(e1r+e2)/e1
+Kmd=(d1r+d2)/d1
+
+#functions for Sphat and Sp
+Sp_hat=Sphat_n*St
+Sp=Sp_hat-D:Sp
+
+#substrate-enzyme complexes solved with the Pade approximant
+E:S=Et*(St-Sp_hat)/(Et+Kme+St-Sp_hat)
+D:Sp=Dt*Sp_hat/(Dt+Kmd+Sp_hat)
+
+#conservation relation
+S=St-E:S-Sp_hat
+
+#differential equations. SS at steady state follows S.
+dSphat_n/dt=e2*E:S*(1/St)-d2*D:Sp*(1/St)
+dSS/dt=kflag*S-kflag*SS
+
+#auxiliaries 
+aux E:S=E:S
+aux S=S
+aux D:Sp=D:Sp
+aux Sp=SP
+aux total=Sp+S+E:S+D:Sp
+
+#parameters
+p K=5
+
+p St=50
+
+p d1r=0.005, d2=0.08500000000000001
+
+p e1r=0.05,e2=0.05
+
+p Dt=5,d1=.09, e1=.1
+
+p kflag=1
+
+#numerical setting
+@ TOTAL=1000,METH=cvode,atol=3e-16,toler=3e-16,XHI=1000,YLO=0,YHI=1,BOUND=1000,maxstorage=100000
+
+
+done

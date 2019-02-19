@@ -1,0 +1,65 @@
+#Equations for the network in Fig. 3B, Table 3 (tQSSA).
+#Simulations in Fig. 3C. Upper panel, bifurcation analysis with St as
+#bifurcation parameter. Lower panel, nullclines, again obtained with
+#bifurcation analysis commenting the ode for ehat or shat,
+#and introducing a parameter with the same name. That very same parameter
+#becomes the bifurcation parameter.
+#to include Sp:E comment the parameter, to remove it comment the last algebraic equation
+
+#enzyme-substrate complexes are solved at steady state
+0=(Dt-D:Sp)*(St-shat-D:Sp-Sp:E)-((d1r+d2)/d1)*D:Sp
+solve D:Sp=0
+
+0=(ehat-(E:S+S:E+Sp:E))*(shat-(S:E+E:S))-((e1r+e2)/e1)*E:S
+solve E:S=0
+
+0=(ehat-(E:S+S:E+Sp:E))*(shat-(S:E+E:S))-((b1r+b2)/b1)*S:E
+solve S:E=0
+
+0=(Ft-F:Ep)*(Et-ehat-F:Ep)-((f1r+f2)/f1)*F:Ep
+solve F:Ep=0
+
+#to be commented to remove Sp:E. In this case, uncomment the parameter Sp:E
+0=(St-shat-D:Sp-Sp:E)*(ehat-(E:S+S:E+Sp:E))-((b1pr+b2p)/b1p)*Sp:E
+solve Sp:E=0
+
+
+#differential equations for the hat variables.
+dshat/dt=d2*D:Sp-e2*E:S
+dehat/dt=f2*F:Ep-b2*S:E-b2p*Sp:E
+
+#differential equations for S and E.
+dSflag/dt=kflag*(shat-(S:E+E:S))-kflag*Sflag
+dEflag/dt=kflag*(ehat-(E:S+S:E+Sp:E))-kflag*Eflag
+
+#parameters
+
+#to be used for nullclines.
+#p shat=12
+#p ehat=20
+
+p Ft=0.5,Dt=200,St=12,Et=20
+
+p d1=0.0009,d1r=0.005,d2=0.08500000000000001
+
+p e1=0.1,e1r=0.05,e2=0.05
+
+p b1=5,b1r=10.6,b2=0.4
+
+p f1=0.1,f1r=0.01,f2=2
+
+p b1p=0.05,b1pr=0.005,b2p=0.0001
+
+p kflag=.1
+
+#commented to add Sp:E, uncommented to remove it 
+#, Sp:E=0
+
+#numerical setting
+@ TOTAL=600,METH=cvode,atol=3e-16,toler=3e-16,newt_tol=1e-10,XHI=1000,YLO=0,YHI=2,BOUND=1000,maxstorage=100000
+
+#AUTO settings
+@ dsmax=.05, dsmin=.0001, ds=.005, ntst=30, nmax=1000, npr=1000, parmin=0, parmax=100
+@ autoxmin=0, autoxmax=3, autoymin=0, autoymax=3
+
+done

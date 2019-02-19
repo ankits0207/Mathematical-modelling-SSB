@@ -1,0 +1,46 @@
+#Equations for the network in Fig. 1B, Table 2 (qssa).
+#file used for Fig.2A and 2C (blue lines)
+
+#conservation relations
+D=Dt-D:Sp
+E=Et-E:S
+S=St-Sp-D:Sp-E:S
+
+#complexes are solved at steady state
+0=D*Sp-((d1r+d2)/d1)*D:Sp
+solve D:Sp=0
+
+0=E*S-((e1r+e2)/e1)*E:S
+solve E:S=0
+
+#differential equation
+dSp/dt=e2*E:S-d1*(Dt-D:Sp)*Sp+d1r*D:Sp
+
+#auxiliaries
+aux E=E
+aux S=S
+aux D=D
+aux D:Sp=D:Sp
+aux E:S=E:S
+aux Shat=S+E:S
+aux Sphat=Sp+D:Sp
+aux Stotal=S+Sp+D:Sp+E:S
+aux Dtotal=D+D:Sp
+aux Etotal=E+E:S
+
+#initial conditions
+init Sp=50
+
+
+#parameters 
+p Dt=200, St=50, Et=20
+
+p d1=0.0009, d1r=0.005, d2=0.085
+
+p e1=0.1,e1r=0.05,e2=0.05
+
+
+#numerical settings
+@ TOTAL=100,Dt=.005,METH=cvode,atol=3e-16,toler=3e-16,newt_tol=.0001,XHI=100,YLO=0,YHI=50,BOUND=1000,maxstorage=100000
+
+done

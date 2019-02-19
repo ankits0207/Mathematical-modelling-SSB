@@ -1,0 +1,12 @@
+%% PPLANE file %%
+
+H.name = 'part_a.pps';
+H.xvar = 'x';
+H.yvar = 'yp';
+H.xder = 'k_not + k1*S - k2*x*yp';
+H.yder = 'k3*x*(1 - yp) - k4*yp';
+H.pname = {'S','k_not','k1','k2','k3','k4'};
+H.pval = {'1','0.5','0.5','0.5','0.5','0.5'};
+H.fieldtype = 'lines';
+H.npts = 20;
+H.wind = [-2  4 -4  2];

@@ -1,0 +1,63 @@
+#Equations for the network in Fig. 1B, Table 2 (Full model).
+#File used for Fig. 1D and Fig. 2 (black lines in all panels). 
+#The two differ for a different
+#set of parameters, as explained in the parameter section.
+
+#K is the parameter used in Fig. 1D.
+Et=Dt*K
+
+#conservation relations
+D=Dt-D:Sp
+E=Et-E:S
+S=St-Sp-D:Sp-E:S
+
+#normalized variables
+Spnorm=Sp/St
+Sphat=Sp+D:Sp
+Sphatnorm=Sphat/St
+
+#odes
+dSp/dt=e2*E:S-d1*(Dt-D:Sp)*Sp+d1r*D:Sp
+dD:Sp/dt=d1*D*Sp-(d1r+d2)*D:Sp
+dE:S/dt=e1*E*S-(e1r+e2)*E:S
+
+#these two variables at steady state simply follow Sphat and Sphatnorm.
+#they have been introduced to allow bifurcation analysis with AUTO
+dSp_norm/dt=kflag*Spnorm-kflag*Sp_norm
+dSphat_n/dt=kflag*Sphatnorm-kflag*Sphat_n
+
+#auxiliaries variables
+aux E=E
+aux S=S
+aux D=D
+aux Shat=S+E:S
+aux Sphat=Sp+D:Sp
+aux Stotal=S+Sp+D:Sp+E:S
+aux Dtotal=D+D:Sp
+aux Etotal=E+E:S
+
+#initial conditions
+init Sp=50
+
+
+#parameters
+
+#param for Fig. 2
+p Dt=200, d1=0.0009, K=0.1
+
+p St=50
+
+p d1r=0.005, d2=0.085
+
+p e1=0.1,e1r=0.05,e2=0.05
+
+#param for Fig. 1D
+#p Dt=5, d1=.09, K=5
+
+p kflag=1
+
+#numerical settings
+@ TOTAL=100,METH=cvode,atol=3e-16,toler=3e-16,XHI=100,YLO=0,YHI=50,BOUND=1000,maxstorage=100000
+
+
+done

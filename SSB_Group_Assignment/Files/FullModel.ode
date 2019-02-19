@@ -1,0 +1,71 @@
+#Equations for the network in Fig. 1B, Table 4 (Full model).
+#Simulations in Fig. 4 and 5, black lines.
+
+#conservation relations
+C=Ct-C:Dp
+D=Dt-(Dp+Dp:Sp+C:Dp)-S:D
+Sp=St-(E:S+S:E+S:D+S)-Dp:Sp
+Ep=Et-(E:S+S:E+E)-F:Ep
+F=Ft-F:Ep
+
+#definition of hat variables.
+Dphat=Dp+Dp:Sp+C:Dp
+Shat=S+S:E+E:S+S:D
+Ehat=E+E:S+S:E
+
+#differential equations
+dC:Dp/dt=c1*C*Dp-((c1r+c2))*C:Dp
+dS:D/dt=a1*S*D-((a1r+a2))*S:D
+dDp:Sp/dt=d1*Dp*Sp-((d1r+d2))*Dp:Sp
+dE:S/dt=e1*E*S-((e1r+e2))*E:S
+dS:E/dt=b1*E*S-((b1r+b2))*S:E
+dF:Ep/dt=f1*F*Ep-((f1r+f2))*F:Ep
+
+dDp/dt=a2*S:D-c1*Dp*C+c1r*C:Dp-d1*Dp*Sp+(d1r+d2)*Dp:Sp
+dS/dt=e1r*E:S-e1*S*E+d2*Dp:Sp+(b1r+b2)*S:E-b1*S*E-a1*S*D+(a1r+a2)*S:D
+dE/dt=(e1r+e2)*E:S-e1*E*S+f2*F:Ep-b1*S*E+b1r*S:E
+dflag/dt=kflag*Shat-kflag*flag
+
+#auxiliaries
+aux C=C
+aux D=D
+aux Sp=Sp
+aux Ep=Ep
+aux F=F
+
+aux Dphat=Dphat
+aux Shat=Shat
+aux Ehat=Ehat
+
+aux Stotal=S+E:S+S:E+S:D+Dp:Sp+Sp
+aux Etotal=E+E:S+S:E+F:Ep+Ep
+aux Dptotal=Dp+D+S:D+Dp:Sp+C:Dp
+aux Ctotal=C+C:Dp
+aux Ftotal=F+F:Ep
+
+aux Sphat=Sp+Dp:Sp
+
+
+#parameters
+p Ct=10,Ft=0.5,Dt=200,St=50,Et=20
+p c1=0.1,c1r=0.1,c2=20
+p a1=0.2,a1r=0.02,a2=4
+p d1=0.0009,d1r=0.005,d2=0.085
+p e1=0.1,e1r=0.05,e2=0.05
+p b1=5,b1r=10.6,b2=0.4
+p f1=0.1,f1r=0.01,f2=2
+
+p kflag=1
+
+#initial conditions
+init S=0
+init E=20
+init Dp=200
+
+#numerical settings
+@ YP=S, TOTAL=200,METH=cvode,atol=3e-16,toler=3e-16,XHI=200,YLO=0,YHI=30,BOUND=1000,maxstorage=100000,DT=.02
+#AUTO settings
+@ dsmax=.05, dsmin=.0001, ds=.005, ntst=30, nmax=1000, npr=1000, parmin=0, parmax=100
+@ autoxmin=0, autoxmax=3, autoymin=0, autoymax=3
+
+done

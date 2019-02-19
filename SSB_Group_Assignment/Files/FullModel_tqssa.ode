@@ -1,0 +1,83 @@
+#Equations for the network in Fig. 1B, Table 4 (qssa).
+#Simulations in Fig. 4 and 5, red lines.
+
+#enzyme-substrate complexes are solved at steady state
+0=(Ct-C:Dp)*(Dphat-C:Dp-Dp:Sp)-((c1r+c2)/c1)*C:Dp
+solve C:Dp=0
+
+0=(Shat-E:S-S:E-S:D)*(Dt-Dphat-S:D)-((a1r+a2)/a1)*S:D
+solve S:D=0
+
+0=(Dphat-Dp:Sp-C:Dp)*(St-Shat-Dp:Sp)-((d1r+d2)/d1)*Dp:Sp
+solve Dp:Sp=0
+
+0=(Ehat-E:S-S:E)*(Shat-E:S-S:E-S:D)-((e1r+e2)/e1)*E:S
+solve E:S=0
+
+0=(Ehat-E:S-S:E)*(Shat-E:S-S:E-S:D)-((b1r+b2)/b1)*S:E
+solve S:E=0
+
+0=(Ft-F:Ep)*(Et-Ehat-F:Ep)-((f1r+f2)/f1)*F:Ep
+solve F:Ep=0
+
+#conservation relations
+C=Ct-C:Dp
+D=Dt-Dphat-S:D
+Sp=St-Shat-Dp:Sp
+Ep=Et-Ehat-F:Ep
+F=Ft-F:Ep
+
+#definition of the non-hat variables
+Dp=Dphat-Dp:Sp-C:Dp
+S=Shat-S:E-E:S-S:D
+E=Ehat-E:S-S:E
+
+#differential equations
+dDphat/dt=a2*S:D-c2*C:Dp
+dShat/dt=d2*Dp:Sp-e2*E:S
+dEhat/dt=f2*F:Ep-b2*S:E
+
+
+#auxiliaries
+aux C=C
+aux D=D
+aux Sp=Sp
+aux Ep=Ep
+aux F=F
+
+aux Dp=Dp
+aux S=S
+aux E=E
+
+aux C:Dp=C:Dp
+aux S:D=S:D
+aux Dp:Sp=Dp:Sp
+aux E:S=E:S
+aux S:E=S:E
+aux F:Ep=F:Ep
+
+aux Sphat=Sp+Dp:Sp
+
+#initial conditions
+init Ehat=20, Dphat=200, Shat=0
+
+
+#parameters
+p Ct=10,Ft=0.5,Dt=200,St=50,Et=20
+
+p c1=0.1,c1r=0.1,c2=20
+
+p a1=0.2,a1r=0.02,a2=4
+
+p d1=0.0009,d1r=0.005,d2=0.085
+
+p e1=0.1,e1r=0.05,e2=0.05
+
+p b1=5,b1r=10.6,b2=0.4
+
+p f1=0.1,f1r=0.01,f2=2
+
+#numerical settings
+@ YP=Shat, TOTAL=200,METH=stiff,Dt=.05,toler=3e-8,newt_tol=1e-8,XHI=200,YLO=0,YHI=50,BOUND=1000,maxstorage=100000
+
+done
